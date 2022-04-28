@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  grafana-datasources.yaml: "apiVersion: 1\n\ndatasources:\n\n# See https://grafana.com/docs/grafana/latest/datasources/prometheus/#provision-the-prometheus-data-source\n-
+    name: Prometheus\n  type: prometheus\n  access: proxy\n  orgId: 1\n  url: http://prometheus:9090\n
+    \ basicAuth: false\n  isDefault: false\n  version: 1\n  editable: true\n  jsonData:\n
+    \   httpMethod: POST\n    exemplarTraceIdDestinations:\n      # Field with internal
+    link pointing to data source in Grafana.\n      # datasourceUid value can be anything,
+    but it should be unique across all defined data source uids.\n      - datasourceUid:
+    tempo\n        name: trace_id\n\n# See https://grafana.com/docs/grafana/latest/datasources/tempo/#provision-the-tempo-data-source\n-
+    name: Tempo\n  type: tempo\n  access: proxy\n  orgId: 1\n  url: http://tempo:3200\n
+    \ basicAuth: false\n  isDefault: true\n  version: 1\n  editable: true\n  apiVersion:
+    1\n  uid: tempo\n  jsonData:\n    httpMethod: GET\n    tracesToLogs:\n      datasourceUid:
+    'loki'\n      tags: ['job', 'instance']\n      mappedTags: [{ key: 'service.name',
+    value: 'service' }]\n      mapTagNamesEnabled: false\n      spanStartTimeShift:
+    '1h'\n      spanEndTimeShift: '1h'\n      filterByTraceID: false\n      filterBySpanID:
+    false\n      lokiSearch: true\n    serviceMap:\n      datasourceUid: 'prometheus'\n
+    \   search:\n      hide: false\n    nodeGraph:\n        enabled: true  \n\n# See
+    https://grafana.com/docs/grafana/latest/datasources/loki/#configure-the-data-source-with-provisioning\n-
+    name: Loki\n  type: loki\n  access: proxy\n  url: http://loki:3100\n  editable:
+    true\n  apiVersion: 1\n  uid: loki  \n  jsonData:\n    maxLines: 1000\n    derivedFields:\n
+    \     # Field with internal link pointing to data source in Grafana.\n      #
+    datasourceUid value can be anything, but it should be unique across all defined
+    data source uids.\n      - datasourceUid: tempo\n        matcherRegex: \"traceID=(\\\\w+)\"\n
+    \       name: TraceID\n        # url will be interpreted as query for the datasource\n
+    \       url: '$${__value.raw}'\n"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: grafana-datasources-yaml

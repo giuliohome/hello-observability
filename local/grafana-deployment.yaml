@@ -38,17 +38,24 @@ spec:
           name: grafana
           ports:
             - containerPort: 3000
-          resources: {}
+          resources: 
+            limits:
+              cpu: '200m'
+              memory: '200Mi'
+            requests:
+              cpu: '100m'
+              memory: '100Mi'
           volumeMounts:
             - mountPath: /etc/grafana/provisioning/datasources/datasources.yaml
-              name: grafana-claim0
+              name: grafana-datasources-yaml-config-volume
+              subPath: grafana-datasources.yaml
             - mountPath: /etc/grafana/provisioning/dashboards
               name: grafana-claim1
       restartPolicy: Always
       volumes:
-        - name: grafana-claim0
-          persistentVolumeClaim:
-            claimName: grafana-claim0
+        - name: grafana-datasources-yaml-config-volume
+          configMap:
+            name: grafana-datasources-yaml
         - name: grafana-claim1
           persistentVolumeClaim:
             claimName: grafana-claim1

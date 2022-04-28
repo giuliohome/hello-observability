@@ -10,8 +10,8 @@ kubectl create configmap -o yaml --dry-run=client \
     > access-log-configmap.yaml
 
 
-
 kubectl create configmap -o yaml --dry-run=client \
-    agent-yaml \
-    --from-file config/agent.yaml \
-    > agent-yaml-configmap.yaml
+    grafana-datasources-yaml \
+    --from-file config/grafana-datasources.yaml \
+    > grafana-datasources-yaml-configmap.yaml
+
