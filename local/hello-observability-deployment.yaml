@@ -48,10 +48,10 @@ spec:
           volumeMounts:
             - mountPath: /tmp/hello-observability.log
               name: hello-observability-log-config-volume
-              subPath: hello-observability-log.conf
+              subPath: hello-observability.log
             - mountPath: /tmp/access.log
               name: access-log-config-volume
-              subPath: access-log.conf
+              subPath: access.log
       restartPolicy: Always
       volumes:
         - name: hello-observability-log-config-volume
