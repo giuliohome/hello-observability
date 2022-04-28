@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  hello-observability.log: ""
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: hello-observability-log

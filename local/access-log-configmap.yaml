@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  access_log.log: ""
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: access-log

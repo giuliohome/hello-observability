@@ -34,22 +34,30 @@ spec:
               value: hello-observability
             - name: OTEL_TRACES_EXPORTER
               value: otlp
-          image: hello-observability
+          image: giuliohome/hello-observability:latest
           name: hello-observability
           ports:
             - containerPort: 8080
-          resources: {}
+          resources:
+            limits:
+              cpu: '200m'
+              memory: '200Mi'
+            requests:
+              cpu: '100m'
+              memory: '100Mi'
           volumeMounts:
             - mountPath: /tmp/hello-observability.log
-              name: hello-observability-claim0
-            - mountPath: /tmp/access_log.log
-              name: hello-observability-claim1
+              name: hello-observability-log-config-volume
+              subPath: hello-observability-log.conf
+            - mountPath: /tmp/access.log
+              name: access-log-config-volume
+              subPath: access-log.conf
       restartPolicy: Always
       volumes:
-        - name: hello-observability-claim0
-          persistentVolumeClaim:
-            claimName: hello-observability-claim0
-        - name: hello-observability-claim1
-          persistentVolumeClaim:
-            claimName: hello-observability-claim1
+        - name: hello-observability-log-config-volume
+          configMap:
+            name: hello-observability-log
+        - name: access-log-config-volume
+          configMap:
+            name: access-log
 status: {}
