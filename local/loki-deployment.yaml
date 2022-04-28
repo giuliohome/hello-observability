@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: loki
+  name: loki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: loki
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: loki
+    spec:
+      containers:
+        - command:
+            - /usr/bin/loki
+            - -config.file=/etc/config/loki.yaml
+          image: grafana/loki:latest
+          name: loki
+          ports:
+            - containerPort: 3100
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/config/loki.yaml
+              name: loki-claim0
+      restartPolicy: Always
+      volumes:
+        - name: loki-claim0
+          persistentVolumeClaim:
+            claimName: loki-claim0
+status: {}

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hello-observability
+  name: hello-observability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: hello-observability
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: hello-observability
+    spec:
+      containers:
+        - env:
+            - name: JAVA_TOOL_OPTIONS
+              value: -javaagent:./opentelemetry-javaagent.jar
+            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+              value: http://tempo:4317
+            - name: OTEL_SERVICE_NAME
+              value: hello-observability
+            - name: OTEL_TRACES_EXPORTER
+              value: otlp
+          image: hello-observability
+          name: hello-observability
+          ports:
+            - containerPort: 8080
+          resources: {}
+          volumeMounts:
+            - mountPath: /tmp/hello-observability.log
+              name: hello-observability-claim0
+            - mountPath: /tmp/access_log.log
+              name: hello-observability-claim1
+      restartPolicy: Always
+      volumes:
+        - name: hello-observability-claim0
+          persistentVolumeClaim:
+            claimName: hello-observability-claim0
+        - name: hello-observability-claim1
+          persistentVolumeClaim:
+            claimName: hello-observability-claim1
+status: {}
