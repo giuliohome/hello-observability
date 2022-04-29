@@ -23,3 +23,7 @@ kubectl create configmap -o yaml --dry-run=client \
     --from-file ../hello-observability/load-generator.sh \
     > load-generator-sh-configmap.yaml
 
+kubectl create configmap -o yaml --dry-run=client \
+    loki-yaml \
+    --from-file config/loki-config.yaml \
+    > loki-yaml-configmap.yaml
