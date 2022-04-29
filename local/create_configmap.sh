@@ -15,3 +15,11 @@ kubectl create configmap -o yaml --dry-run=client \
     --from-file config/grafana-datasources.yaml \
     > grafana-datasources-yaml-configmap.yaml
 
+#    volumes:
+#      - ../hello-observability/load-generator.sh:/tmp/load-generator.sh
+
+kubectl create configmap -o yaml --dry-run=client \
+    load-generator-sh \
+    --from-file ../hello-observability/load-generator.sh \
+    > load-generator-sh-configmap.yaml
+

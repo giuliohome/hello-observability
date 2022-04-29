@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  load-generator.sh: while true; do curl http://hello-observability:8080/hello; sleep
+    10s; done
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: load-generator-sh

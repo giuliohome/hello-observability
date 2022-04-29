@@ -34,10 +34,13 @@ spec:
           resources: {}
           volumeMounts:
             - mountPath: /tmp/load-generator.sh
-              name: load-generator-claim0
+              subPath: load-generator.sh
+              name: load-generator-sh-configmap
+              readOnly: true
       restartPolicy: Always
       volumes:
-        - name: load-generator-claim0
-          persistentVolumeClaim:
-            claimName: load-generator-claim0
+        - name: load-generator-sh-configmap
+          configMap:
+            name: load-generator-sh
+            defaultMode: 0555
 status: {}
