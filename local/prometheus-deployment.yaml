@@ -36,9 +36,12 @@ spec:
           volumeMounts:
             - mountPath: /etc/prometheus.yaml
               name: prometheus-claim0
+            - mountPath: /etc/prometheus.yaml
+              subPath: prometheus.yaml
+              name: prometheus-yaml-config-volume
       restartPolicy: Always
       volumes:
-        - name: prometheus-claim0
-          persistentVolumeClaim:
-            claimName: prometheus-claim0
+        - name: prometheus-yaml-config-volume
+          configMap:
+            name: prometheus-yaml
 status: {}

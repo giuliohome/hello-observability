@@ -27,3 +27,8 @@ kubectl create configmap -o yaml --dry-run=client \
     loki-yaml \
     --from-file config/loki-config.yaml \
     > loki-yaml-configmap.yaml
+
+kubectl create configmap -o yaml --dry-run=client \
+    prometheus-yaml \
+    --from-file config/prometheus.yaml \
+    > prometheus-yaml-configmap.yaml
