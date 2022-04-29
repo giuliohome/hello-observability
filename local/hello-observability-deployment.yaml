@@ -34,7 +34,7 @@ spec:
               value: hello-observability
             - name: OTEL_TRACES_EXPORTER
               value: otlp
-          image: giuliohome/hello-observability:build20220429.2
+          image: giuliohome/hello-observability:build20220429.3
           name: hello-observability
           ports:
             - containerPort: 8080
