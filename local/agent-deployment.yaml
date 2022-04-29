@@ -51,23 +51,21 @@ spec:
               cpu: '100m'
               memory: '100Mi'
           volumeMounts:
-            - mountPath: /tmp/hello-observability.log
+            - mountPath: /tmp/log
               name: hello-observability-log-config-volume
               subPath: hello-observability.log
-            - mountPath: /tmp/access.log
-              name: access-log-config-volume
-              subPath: access.log
             - mountPath: /etc/agent-config/agent.yaml
               name: agent-yaml-config-volume
               subPath: agent.yaml
       restartPolicy: Always
       volumes:
         - name: hello-observability-log-config-volume
-          configMap:
-            name: hello-observability-log
-        - name: access-log-config-volume
-          configMap:
-            name: access-log
+          csi:
+            driver: file.csi.azure.com
+            volumeAttributes:
+              secretName: azure-secret  # required
+              shareName: aksshare  # required
+              mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30"  # optional
         - name: agent-yaml-config-volume
           configMap:
             name: agent-yaml

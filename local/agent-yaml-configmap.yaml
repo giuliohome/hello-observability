@@ -37,13 +37,13 @@ data:
           - targets: [localhost]
             labels:
               job: hello-observability
-              __path__: /tmp/hello-observability.log
+              __path__: /tmp/log/hello-observability.log
         - job_name: tomcat-access
           static_configs:
           - targets: [localhost]
             labels:
               job: tomcat-access
-              __path__: /tmp/access_log.log
+              __path__: /tmp/log/access_log.log
 
     traces:
       configs:
