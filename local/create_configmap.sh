@@ -32,3 +32,14 @@ kubectl create configmap -o yaml --dry-run=client \
     prometheus-yaml \
     --from-file config/prometheus.yaml \
     > prometheus-yaml-configmap.yaml
+
+
+kubectl create configmap -o yaml --dry-run=client \
+    prometheus-yaml \
+    --from-file config/prometheus.yaml \
+    > prometheus-yaml-configmap.yaml
+
+kubectl create configmap -o yaml --dry-run=client \
+    tempo-local-yaml \
+    --from-file config/tempo-local.yaml \
+    > tempo-local-yaml-configmap.yaml

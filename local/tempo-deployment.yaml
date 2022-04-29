@@ -38,14 +38,15 @@ spec:
           resources: {}
           volumeMounts:
             - mountPath: /etc/tempo.yaml
-              name: tempo-claim0
+              name: tempo-local-yaml-config-volume
+              subPath: tempo-local.yaml
             - mountPath: /tmp/tempo
               name: tempo-claim1
       restartPolicy: Always
       volumes:
-        - name: tempo-claim0
-          persistentVolumeClaim:
-            claimName: tempo-claim0
+        - name: tempo-local-yaml-config-volume
+          configMap:
+            name: tempo-local-yaml
         - name: tempo-claim1
           persistentVolumeClaim:
             claimName: tempo-claim1
