@@ -70,7 +70,7 @@ public class HelloObservabilityBootApp {
 				throw new IOException(e);
 			}
 
-			Request request = new Request.Builder().url("http://localhost:8080/observability").build();
+			Request request = new Request.Builder().url("http://hello.observability.giuliohome.com/observability").build();
 			try (Response response = client.newCall(request).execute()) {
 				return "Hello, " + response.body().string() + "!\n";
 			}
