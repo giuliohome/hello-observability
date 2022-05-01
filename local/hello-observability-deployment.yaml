@@ -49,9 +49,6 @@ spec:
             - mountPath: /tmp/log
               name: hello-observability-log-config-volume
               subPath: hello-observability.log
-            - mountPath: /tmp/access.log
-              name: access-log-config-volume
-              subPath: access.log
       restartPolicy: Always
       volumes:
         - name: hello-observability-log-config-volume
@@ -61,7 +58,4 @@ spec:
               secretName: azure-secret  # required
               shareName: aksshare  # required
               mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30"  # optional
-        - name: access-log-config-volume
-          configMap:
-            name: access-log
 status: {}
