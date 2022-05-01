@@ -52,10 +52,6 @@ spec:
       restartPolicy: Always
       volumes:
         - name: hello-observability-log-config-volume
-          csi:
-            driver: file.csi.azure.com
-            volumeAttributes:
-              secretName: azure-secret  # required
-              shareName: aksshare  # required
-              mountOptions: "dir_mode=0777,file_mode=0777,cache=strict,actimeo=30"  # optional
+          persistentVolumeClaim:
+            claimName: log-claim
 status: {}
