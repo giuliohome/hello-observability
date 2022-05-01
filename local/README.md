@@ -1,7 +1,8 @@
 # Online Observability Demo
 
-Grafana live [here](http://observability.grafana.giuliohome.com) from Azure Kubernetes Service.
+Grafana live [here](http://35.195.126.179:8080/d/UjJzQ1L7k/hello-observability) from Google Kubernetes Engine.
 
-# Spring Boot 
+# Persistent Volume Claim
 
-Hello app [online](http://hello.observability.giuliohome.com/hello) as well.
+The stateful component is needed to store the logs
+Read the thread on [kubernetes forum](https://discuss.kubernetes.io/t/google-cloud-engine-cpu-quota-exceeded-for-a-simple-cluster/19844?u=giuliohome) as well.

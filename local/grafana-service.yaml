@@ -1,19 +1,74 @@
-apiVersion: v1
+piVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml
-    kompose.version: 1.26.0 (40646f47)
-  creationTimestamp: null
+    cloud.google.com/neg: '{"ingress":true}'
+  creationTimestamp: "2022-05-01T20:18:28Z"
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
   labels:
     io.kompose.service: grafana
-  name: grafana
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:io.kompose.service: {}
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8080,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:io.kompose.service: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: GoogleCloudConsole
+    operation: Update
+    time: "2022-05-01T20:18:28Z"
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:finalizers:
+          .: {}
+          v:"service.kubernetes.io/load-balancer-cleanup": {}
+      f:status:
+        f:loadBalancer:
+          f:ingress: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2022-05-01T20:19:15Z"
+  name: grafana-service-lb
+  namespace: default
+  resourceVersion: "175072"
+  uid: 4f220571-6f1b-48b9-8561-a006e2a57da1
 spec:
+  clusterIP: 10.120.14.53
+  clusterIPs:
+  - 10.120.14.53
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
-    - name: "9000"
-      port: 9000
-      targetPort: 3000
+  - nodePort: 30343
+    port: 8080
+    protocol: TCP
+    targetPort: 3000
   selector:
     io.kompose.service: grafana
+  sessionAffinity: None
+  type: LoadBalancer
 status:
-  loadBalancer: {}
+  loadBalancer:
+    ingress:
+    - ip: 35.195.126.179
+
